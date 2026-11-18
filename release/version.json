@@ -1,6 +1,6 @@
 {
-  "version": "6.3",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.3/MamasLoveLaundryPOS-6.3.apk",
-  "size": 644915,
-  "notes": "Faster opening: the activation check no longer holds the till, the order form appears from your saved services immediately, and a normal start skips an unnecessary storage read."
+  "version": "6.4",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.4/MamasLoveLaundryPOS-6.4.apk",
+  "size": 649079,
+  "notes": "Much faster opening: reports, Excel, printing, owner settings, backup and the tutorial (about 190 KB of code) now load after the till is up instead of during start, so the POS opens with less than half the JavaScript to parse."
 }
