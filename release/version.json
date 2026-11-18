@@ -1,6 +1,6 @@
 {
-  "version": "5.5",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.5/MamasLoveLaundryPOS-5.5.apk",
+  "version": "5.6",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.6/MamasLoveLaundryPOS-5.6.apk",
   "size": 644915,
-  "notes": "The Pending list stays fast even with very big data: it now paints the first 40 orders and offers Show more instead of building every card (measured: 2,000 open orders went from 940 ms / 2.5 MB of page to 110 ms / 51 KB). That first page is also saved on the phone, so opening Pending again shows it instantly while the fresh list loads behind it. Nothing syncs when you open or close the app; uploads stay silent and Sync All stays manual."
+  "notes": "The Pending screen numbers (collected today, sales today, waiting payment/claim, for collection) are now saved with the page and shown instantly when you open it, instead of being computed first. They are thrown away the moment anything changes them - a sale, a payment, a claim, an edit, a delete or a cloud download - and never reused on a different day, so you can never see yesterday's or pre-sale figures."
 }
