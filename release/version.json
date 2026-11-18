@@ -1,6 +1,6 @@
 {
-  "version": "2.1",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.1/MamasLoveLaundryPOS-2.1.apk",
+  "version": "2.2",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.2/MamasLoveLaundryPOS-2.2.apk",
   "size": 833728,
-  "notes": "System Health tab opens again and shows Installed version + Update status with a Check for Update button."
+  "notes": "Owner Settings drawer markup cleaned: every tab is inside the panel and each closing tag is labelled (/settings-content, /settings-panel ...). System Health stays fixed."
 }
