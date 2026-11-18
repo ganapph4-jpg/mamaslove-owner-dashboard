@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "5.6",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.6/MamasLoveLaundryPOS-5.6.apk",
+  "version": "5.7",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.7/MamasLoveLaundryPOS-5.7.apk",
   "size": 644915,
-  "notes": "The Pending screen numbers (collected today, sales today, waiting payment/claim, for collection) are now saved with the page and shown instantly when you open it, instead of being computed first. They are thrown away the moment anything changes them - a sale, a payment, a claim, an edit, a delete or a cloud download - and never reused on a different day, so you can never see yesterday's or pre-sale figures."
+  "notes": "Offline is now actually detected and shown. The app could not tell before: the APK does not declare the Android network-state permission, so the phone always reported itself as online and the 'No internet' strip never appeared. The app now checks with a tiny probe and with the result of its own cloud requests, so the strip and the warning pop up when there is really no internet, and disappear when the connection returns. Orders continue to work and are saved on the phone either way."
 };
