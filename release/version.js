@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "4.3",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.3/MamasLoveLaundryPOS-4.3.apk",
-  "size": 677915,
-  "notes": "Payment + loyalty final check: cash overpayment no longer over-credits loyalty points; paying a down payment balance now credits the full-sale points; owner edit recalculates points; Search finds an order by the six digits printed on the receipt; Sync All shows a clear offline message"
+  "version": "4.4",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.4/MamasLoveLaundryPOS-4.4.apk",
+  "size": 682011,
+  "notes": "Offline notice: a banner + toast appears when the phone has no internet (including when the app is opened offline) and clears when it returns; reconnect now uploads every order/customer saved offline and downloads changes; fixed Cloud Sync enabled mid-session never attaching the reconnect listeners"
 };
