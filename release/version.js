@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "4.7",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.7/MamasLoveLaundryPOS-4.7.apk",
+  "version": "4.8",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.8/MamasLoveLaundryPOS-4.8.apk",
   "size": 682011,
-  "notes": "Faster start: the activation check no longer holds the app - it now runs after the POS is already on screen (an un-activatable device still gets the activation screen first), and a QR library that was being loaded twice on every start was removed. Boot is measurably quicker; data size no longer affects opening."
+  "notes": "Nothing is checked automatically at start any more. The app update is only the Check for Update button, and Cloud Sync no longer runs at start-up or at 5:00 PM - copying happens when you tap Sync All. Orders still upload by themselves the moment the internet returns. Boot does no network work."
 };
