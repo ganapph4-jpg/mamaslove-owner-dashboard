@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "3.5",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.5/MamasLoveLaundryPOS-3.5.apk",
+  "version": "3.6",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.6/MamasLoveLaundryPOS-3.6.apk",
   "size": 677915,
-  "notes": "OPTIMISATION PASS. Repeated sales searches now reuse a 15-second cache instead of re-reading the last 2000 orders, the cloud badge no longer redraws while it is off screen, and an unused 56 KB QR library was removed from the installer. Opening and tapping should feel the same or better than 3.4."
+  "notes": "UPDATE FLOW FIXED. The update screen no longer tries to open Chrome from inside the app (that attempt is what showed the error page). Now: tap Copy download link, open Chrome, paste in the address bar and tap Go \u2014 Chrome downloads the file, then tap Update on Android's prompt. Data, settings and licence are kept. Everything else is unchanged from 3.5."
 };
