@@ -4,34 +4,30 @@ Static site: **no build step, no npm, no server, no framework**.
 
 ```
 owner-dashboard/
-├── index.html    ← owner console (sales / orders / customers / machines)
-└── licenses.html ← license dashboard (issue + revoke activation keys)
+└── index.html    ← owner console (sales / orders / customers / machines)
 ```
 
-Each page is one self-contained file: the stylesheet (Tailwind), the error strip,
-the demo data and `shop-config` defaults are inlined, so there are no other files
-to copy and no CDN. Double-click either file to use it locally.
+The page is one self-contained file: the stylesheet (Tailwind), the error strip, the
+demo data and `shop-config` defaults are inlined, so there is no other file to copy and
+no CDN. Double-click it to use it locally.
+
+**This site is read-only — it has no key generator.** Activation keys are issued from
+the separate private repository `mamaslove-keygen-private`, so this repository stays
+public-safe.
 
 ---
 
 ## 1. Upload to GitHub
 
-Create a new repository, then upload the **contents of this folder** so that
-`index.html` sits at the repository root (not inside a subfolder).
-
-Git, if you prefer the terminal:
+Already pushed to **`github.com/ganapph4-jpg/mamaslove-owner-dashboard`** with
+`index.html` at the repository root. After any change here:
 
 ```bash
 cd "publish/owner-dashboard"
-git init
-git add .
-git commit -m "owner dashboard"
-git branch -M main
-git remote add origin https://github.com/<your-user>/<your-repo>.git
-git push -u origin main
+git add -A && git commit -m "update dashboard" && git push
 ```
 
-Do **not** add the `keygen` folder to this repository.
+Never add `publish/keygen` (or any key generator) to this repository.
 
 ---
 
@@ -61,8 +57,9 @@ same domain in Firebase (step 3).
 | Google sign-in enabled | Authentication → Sign-in method → Google |
 | Site domain allowed | Authentication → Settings → **Authorized domains** → add `<project>.pages.dev` (and your custom domain) |
 
-Without the authorized domain, the **Sign in with Google** button fails. Email/password
-sign-in works from any origin, so it is the safer option for `licenses.html`.
+The console itself needs no Firebase sign-in — it only reads with the API key. These
+auth settings matter for the private license page (`licenses.html` in
+`mamaslove-keygen-private`), which signs in before it can issue or revoke keys.
 
 ---
 
@@ -91,10 +88,9 @@ it is safe to show to a customer or record for a walkthrough. The strip at the t
 "Preview · sample data". Opening `index.html` without the `?demo=1` part is the real,
 empty console.
 
-**licenses.html** — sign in with the account that owns the license project
-(`pos-offline-laundry`): Google, or Email/Password created in Firebase Console →
-Authentication → Users. Issue a key by pasting the customer's device code, and revoke
-keys from the table.
+**Keys are not issued here.** They come from the private repository
+`mamaslove-keygen-private` (`licenses.html`, owner login required), which issues, revokes
+and shows the same key the customer types into the offline app.
 
 ---
 
