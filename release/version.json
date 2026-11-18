@@ -1,6 +1,6 @@
 {
-  "version": "3.8",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.8/MamasLoveLaundryPOS-3.8.apk",
+  "version": "3.9",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.9/MamasLoveLaundryPOS-3.9.apk",
   "size": 677915,
-  "notes": "UPDATE READY FOR ONE-TAP INSTALL. The app now detects whether its Android shell can download and install an update by itself: if it can, the button becomes Download & install and Android opens the installer automatically; if not (the current shell), it keeps the Copy download link \u2192 Chrome steps. Nothing else changed."
+  "notes": "NO MORE STUCK 'INITIALIZING'. The loading screen was being put back up by background startup work, so the app showed 'Initializing app... (memory card check)' and '... (cleaning reminder)' after it had already opened. Background work no longer touches the screen, the memory-card check and cleaning reminder now wait 1.5 and 3 seconds after the till is usable, the memory-card restore question is a normal dialog instead of a frozen confirm box, and the automatic backup no longer serialises the whole database on a timer while you are serving customers."
 }
