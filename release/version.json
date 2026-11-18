@@ -1,6 +1,6 @@
 {
-  "version": "2.8",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.8/MamasLoveLaundryPOS-2.8.apk",
+  "version": "2.9",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.9/MamasLoveLaundryPOS-2.9.apk",
   "size": 837824,
-  "notes": "Fixes the app getting stuck on 'Initializing app': local scripts no longer use ?v= URLs (they can fail to load on file:// and left the cloud-sync/licence code missing), the header cloud badge no longer throws every 5s when cloud sync is absent, startup steps time out instead of hanging forever, and a 'Continue anyway' button appears if boot stalls."
+  "notes": "Faster start: the loading screen now lifts as soon as the first screen is wired. The memory-card check, Firestore listeners, printer settings, cleaning reminder and tour run right after instead of blocking boot. Owner Settings > System Health now shows 'Last start' in seconds."
 }
