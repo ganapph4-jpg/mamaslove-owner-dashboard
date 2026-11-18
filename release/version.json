@@ -1,6 +1,6 @@
 {
-  "version": "4.1",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.1/MamasLoveLaundryPOS-4.1.apk",
+  "version": "4.2",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.2/MamasLoveLaundryPOS-4.2.apk",
   "size": 677915,
-  "notes": "Opening Cloud Sync now runs a full Sync All (uploads every queued order/customer, then downloads everything new); Sync Now button renamed Sync All with clear result toasts"
+  "notes": "Bug sweep: Search now finds an order saved seconds ago (stale 15s cache); a fast double tap on Submit no longer saves two orders; Sync All shows a clear message when offline; update steps no longer throw if capabilities are missing"
 }
