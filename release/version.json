@@ -1,6 +1,6 @@
 {
-  "version": "5.9",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.9/MamasLoveLaundryPOS-5.9.apk",
+  "version": "6.0",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.0/MamasLoveLaundryPOS-6.0.apk",
   "size": 644915,
-  "notes": "Small follow-up after a review of the last two updates. The offline check now retries after one minute, then two, then five (it was waiting two minutes from the very first failure), and the saved Pending figures can no longer land on top of fresher ones while the real numbers are still being computed - they only fill a cold start, which is exactly when they are needed."
+  "notes": "Reopening the app no longer rebuilds the screen you left. The finished Pending / Daily Orders / Audit page is saved on the phone when you leave it and pasted back at start-up, so the shop sees the same screen with its orders straight away while fresh data loads quietly behind it (measured here: screen up in 158 ms, before the app finished starting at 266 ms). The Create Order form is deliberately not restored, because its cart must always be the live one. Also fixed a leftover line that threw an error on every start and silently disabled the 'time ago' dates."
 }
