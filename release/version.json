@@ -1,6 +1,6 @@
 {
-  "version": "3.4",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.4/MamasLoveLaundryPOS-3.4.apk",
-  "size": 690290,
-  "notes": "FASTER TAPS. Update check is now manual only \u2014 tap Check for Update in Owner Settings when you want it; nothing checks in the background any more, so no network work competes with the buttons. Sales search and daily reports now draw their rows in small batches, which keeps the screen responsive on long histories instead of freezing. The 'Updated' message after installing is a small toast instead of a blocking dialog."
+  "version": "3.5",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.5/MamasLoveLaundryPOS-3.5.apk",
+  "size": 677915,
+  "notes": "OPTIMISATION PASS. Repeated sales searches now reuse a 15-second cache instead of re-reading the last 2000 orders, the cloud badge no longer redraws while it is off screen, and an unused 56 KB QR library was removed from the installer. Opening and tapping should feel the same or better than 3.4."
 }
