@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "5.4",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.4/MamasLoveLaundryPOS-5.4.apk",
+  "version": "5.5",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v5.5/MamasLoveLaundryPOS-5.5.apk",
   "size": 644915,
-  "notes": "Start-up does no network work at all, and the app never checks for updates by itself - that is still the Check for Update button you tap. The light cloud check (other phone's new orders) now runs only when you open the Pending list, at most once every 5 minutes, and no longer copies the whole local database while doing it, so the screen does not pause."
+  "notes": "The Pending list stays fast even with very big data: it now paints the first 40 orders and offers Show more instead of building every card (measured: 2,000 open orders went from 940 ms / 2.5 MB of page to 110 ms / 51 KB). That first page is also saved on the phone, so opening Pending again shows it instantly while the fresh list loads behind it. Nothing syncs when you open or close the app; uploads stay silent and Sync All stays manual."
 };
