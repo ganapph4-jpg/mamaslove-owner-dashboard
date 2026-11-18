@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "2.9",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.9/MamasLoveLaundryPOS-2.9.apk",
+  "version": "3.0",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.0/MamasLoveLaundryPOS-3.0.apk",
   "size": 837824,
-  "notes": "Faster start: the loading screen now lifts as soon as the first screen is wired. The memory-card check, Firestore listeners, printer settings, cleaning reminder and tour run right after instead of blocking boot. Owner Settings > System Health now shows 'Last start' in seconds."
+  "notes": "Update button now really opens the phone browser: it sends an Android intent to Chrome (window.open does nothing inside the app), and if that is blocked it shows the download link plus copies it so it can be pasted in Chrome."
 };
