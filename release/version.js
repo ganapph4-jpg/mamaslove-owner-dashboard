@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "3.0",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.0/MamasLoveLaundryPOS-3.0.apk",
+  "version": "3.1",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v3.1/MamasLoveLaundryPOS-3.1.apk",
   "size": 837824,
-  "notes": "Update button now really opens the phone browser: it sends an Android intent to Chrome (window.open does nothing inside the app), and if that is blocked it shows the download link plus copies it so it can be pasted in Chrome."
+  "notes": "TEST BUILD 3.1 \u2014 update-flow test. Open the app and wait about 3 seconds: the update popup should appear by itself. Tap Continue, then Open in Chrome: your phone browser should open this download page. Download the file, open it, tap Update (never Uninstall). After it installs, open the app: System Health should show v3.1 and your products, sales, customers, settings and licence should still be there."
 };
