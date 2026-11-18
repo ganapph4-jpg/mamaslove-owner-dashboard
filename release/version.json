@@ -1,6 +1,6 @@
 {
-  "version": "2.0",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.0/MamasLoveLaundryPOS-2.0.apk",
+  "version": "2.1",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.1/MamasLoveLaundryPOS-2.1.apk",
   "size": 833728,
-  "notes": "Update flow: the app checks the update file online (progress bar), then opens the link in Chrome to download and tap Update. Nothing is installed by the app itself."
+  "notes": "System Health tab opens again and shows Installed version + Update status with a Check for Update button."
 }
