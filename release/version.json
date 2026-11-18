@@ -1,6 +1,6 @@
 {
-  "version": "2.3",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.3/MamasLoveLaundryPOS-2.3.apk",
+  "version": "2.4",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.4/MamasLoveLaundryPOS-2.4.apk",
   "size": 837824,
-  "notes": "Automatic update now also reads a script manifest that works inside the app, and System Health shows the last check time and any error."
+  "notes": "Update dialog shows the download size. Automatic update check reads the script manifest (works inside the app)."
 }
