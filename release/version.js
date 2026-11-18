@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "6.2",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.2/MamasLoveLaundryPOS-6.2.apk",
+  "version": "6.3",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.3/MamasLoveLaundryPOS-6.3.apk",
   "size": 644915,
-  "notes": "Ready to sell. Activation is now enforced: a brand-new copy that has never been activated cannot save an order (the activation window comes back), while a shop that already has orders is never blocked, so updates stay safe. Each shop can now change the Cloud Sync admin password instead of sharing one printed in every copy. Default SMS text no longer carries another shop's name, and receipts/records already use the name and address entered in Owner Settings."
+  "notes": "Faster opening: the activation check no longer holds the till, the order form appears from your saved services immediately, and a normal start skips an unnecessary storage read."
 };
