@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "6.0",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.0/MamasLoveLaundryPOS-6.0.apk",
+  "version": "6.1",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.1/MamasLoveLaundryPOS-6.1.apk",
   "size": 644915,
-  "notes": "Reopening the app no longer rebuilds the screen you left. The finished Pending / Daily Orders / Audit page is saved on the phone when you leave it and pasted back at start-up, so the shop sees the same screen with its orders straight away while fresh data loads quietly behind it (measured here: screen up in 158 ms, before the app finished starting at 266 ms). The Create Order form is deliberately not restored, because its cart must always be the live one. Also fixed a leftover line that threw an error on every start and silently disabled the 'time ago' dates."
+  "notes": "Final check-up over the whole app. Every screen was opened and driven in a test browser with orders, payments and claims: no errors, all money figures correct, a new sale appears in Pending straight away. Two small repairs: the saved screen can no longer hold up the start if the phone's storage is slow (it gives up after 0.4 s and starts normally), and the boot error that was silently disabling the 'time ago' dates is gone (shipped in 6.0, reconfirmed here)."
 };
