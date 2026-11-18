@@ -1,6 +1,6 @@
 {
-  "version": "2.6",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.6/MamasLoveLaundryPOS-2.6.apk",
+  "version": "2.7",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.7/MamasLoveLaundryPOS-2.7.apk",
   "size": 837824,
-  "notes": "Update check fixes: the exported function no longer calls itself (that caused the stack overflow), the newest of all CDN copies wins, and the first source is uncached."
+  "notes": "Update check now reads the GitHub release API first (fresh within 60s), so a new version appears immediately. Also fixes the stack-overflow crash on Check for Update."
 }
