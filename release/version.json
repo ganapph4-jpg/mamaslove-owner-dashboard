@@ -1,6 +1,6 @@
 {
-  "version": "2.7",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.7/MamasLoveLaundryPOS-2.7.apk",
+  "version": "2.8",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v2.8/MamasLoveLaundryPOS-2.8.apk",
   "size": 837824,
-  "notes": "Update check now reads the GitHub release API first (fresh within 60s), so a new version appears immediately. Also fixes the stack-overflow crash on Check for Update."
+  "notes": "Fixes the app getting stuck on 'Initializing app': local scripts no longer use ?v= URLs (they can fail to load on file:// and left the cloud-sync/licence code missing), the header cloud badge no longer throws every 5s when cloud sync is absent, startup steps time out instead of hanging forever, and a 'Continue anyway' button appears if boot stalls."
 }
