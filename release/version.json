@@ -1,6 +1,6 @@
 {
-  "version": "4.2",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.2/MamasLoveLaundryPOS-4.2.apk",
+  "version": "4.3",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v4.3/MamasLoveLaundryPOS-4.3.apk",
   "size": 677915,
-  "notes": "Bug sweep: Search now finds an order saved seconds ago (stale 15s cache); a fast double tap on Submit no longer saves two orders; Sync All shows a clear message when offline; update steps no longer throw if capabilities are missing"
+  "notes": "Payment + loyalty final check: cash overpayment no longer over-credits loyalty points; paying a down payment balance now credits the full-sale points; owner edit recalculates points; Search finds an order by the six digits printed on the receipt; Sync All shows a clear offline message"
 }
