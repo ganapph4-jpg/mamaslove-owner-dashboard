@@ -1,6 +1,6 @@
 {
-  "version": "6.6",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.6/MamasLoveLaundryPOS-6.6.apk",
+  "version": "6.7",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.7/MamasLoveLaundryPOS-6.7.apk",
   "size": 657271,
-  "notes": "Licence lock fixed: it now engages only when the licence cover is really on screen, so a hidden cover can no longer freeze a working till. While locked the app's timers stop and Cloud Sync neither uploads nor pulls. Also includes 6.5: payment amounts stored as text can no longer corrupt a total, Save Shop Info works on a fresh install, Restore survives odd backup files, and the licence is copied to the memory card and restored."
+  "notes": "Pending screen fixed: after the app is reopened on Pending, the saved screen is restored with live controls. Search filters the visible list again and Show more adds cards on screen (before, both updated an invisible copy of the list)."
 }
