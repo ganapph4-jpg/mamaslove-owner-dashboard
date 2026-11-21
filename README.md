@@ -80,9 +80,13 @@ auth settings matter for the private license page (`licenses.html` in
 
 ## 4. Opening the console
 
-**index.html** is already set up for this shop: the `MLLP_SHOP_CONFIG` block near the top
-holds the `my-pos-laundry` API key and Project ID. Every new phone skips the connection
-screen; each browser still creates its own dashboard password once.
+**index.html** is already set up for this shop: `MLLP_SHOP_CONFIG` holds the
+`my-pos-laundry` API key, the Project ID and `skipPassword: true`. Every phone opens
+straight into the console — no connection screen and no password screen.
+
+⚠️ With no password, anyone who has the site link can read the dashboard. Keep the URL
+private. Remove `skipPassword` (or set it to `false`) to bring the per-browser password
+back.
 
 The key is public — it only selects the project. **Never replace it with the licence
 project's (`pos-offline-laundry`) key.**

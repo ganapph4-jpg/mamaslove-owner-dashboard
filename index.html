@@ -411,12 +411,13 @@ Check your Browserslist config to be sure that your targets are set up correctly
  *    rules must stay strict, and you should never put the LICENSE project's
  *    key here.
  *
- * Every new phone opens straight into the console (the dashboard password
- * is still created once per phone).
+ * This copy also sets skipPassword, so every phone opens straight into the
+ * console with no lock screen. Keep the site URL private.
  */
 window.MLLP_SHOP_CONFIG = {
   apiKey: 'AIzaSyAd0WvtTajm4pfttYUygvlnVX6Y-FNFuvs',
-  projectId: 'my-pos-laundry'
+  projectId: 'my-pos-laundry',
+  skipPassword: true
 };
 
 </script>  <!-- shop defaults: filled in, so no API-key setup on a new phone -->
@@ -1013,7 +1014,7 @@ window.MLLP_SHOP_CONFIG = {
       <div id="test-result" class="mt-3 hidden rounded-lg px-3 py-2 text-sm"></div>
     </div>
 
-    <div class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
+    <div id="password-card" class="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
       <h2 class="text-base font-semibold text-slate-900">Dashboard password</h2>
       <p class="mt-1 text-sm text-slate-600">Asked every time this page opens, on this browser.</p>
       <form id="pw-form" class="mt-4 grid gap-4 sm:grid-cols-3">
@@ -1200,6 +1201,9 @@ window.MLLP_SHOP_CONFIG = {
     if (!s || !s.apiKey || !s.projectId) return null;
     return { apiKey: s.apiKey, projectId: s.projectId, baseUrl: '' };
   }
+
+  /* Hardcoded dashboard: skip the per-browser password screen entirely. */
+  var SHOP_SKIP_PASSWORD = !!(window.MLLP_SHOP_CONFIG && window.MLLP_SHOP_CONFIG.skipPassword);
 
   /* ?demo=1 → the page draws sample data from demo-data.js and never talks to
      a database: no key, no password, nothing stored. */
@@ -2912,6 +2916,7 @@ window.MLLP_SHOP_CONFIG = {
   }
 
   function showLock(mode) {
+    if (SHOP_SKIP_PASSWORD) { openDashboard(true); return; }
     lockMode = mode;
     dashboardLocked = true;
     var el = document.getElementById('lock-screen');
@@ -3432,8 +3437,13 @@ window.MLLP_SHOP_CONFIG = {
     applyPeriodUI();
     updateFullLabel();
     setView('overview');
+    if (SHOP_SKIP_PASSWORD) {                 // hardcoded shop: no password screen at all
+      var passwordCard = document.getElementById('password-card');
+      if (passwordCard) passwordCard.style.display = 'none';
+    }
     if (DEMO) openDashboard(true);            // ?demo=1: sample data, no database
-    else if (!cfg) showGate(true);            // first run: connection details + password
+    else if (!cfg) showGate(true);            // first run: connection details
+    else if (SHOP_SKIP_PASSWORD) openDashboard(true);
     else if (getLock()) showLock('unlock');   // known device: ask for the password
     else showLock('set');                     // connected but no password yet: create one
   } catch (e) {
