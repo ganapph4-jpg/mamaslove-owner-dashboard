@@ -398,10 +398,10 @@ Check your Browserslist config to be sure that your targets are set up correctly
 </script>     <!-- sample data for ?demo=1; ignored otherwise -->
 <script>/* inlined: shop-config.js */
 /*!
- * shop-config.js — OPTIONAL private defaults for YOUR owner dashboard
+ * shop-config.js — shop defaults for YOUR owner dashboard
  * ---------------------------------------------------------------------------
- * Fill this in before uploading owner-web/ to your host if you want the
- * dashboard to open straight into your shop (no key typed on any device).
+ * Filled in below so the dashboard opens straight into this shop, with no
+ * API key typed on any device.
  *
  *   apiKey    = Firebase → Project settings → Your apps → Web API key
  *   projectId = your Firebase project id
@@ -411,15 +411,15 @@ Check your Browserslist config to be sure that your targets are set up correctly
  *    rules must stay strict, and you should never put the LICENSE project's
  *    key here.
  *
- * Leaving it empty (as shipped) means: the dashboard asks for the key once
- * per browser and remembers it.
+ * Every new phone opens straight into the console (the dashboard password
+ * is still created once per phone).
  */
 window.MLLP_SHOP_CONFIG = {
-  apiKey: '',
-  projectId: ''
+  apiKey: 'AIzaSyAd0WvtTajm4pfttYUygvlnVX6Y-FNFuvs',
+  projectId: 'my-pos-laundry'
 };
 
-</script>  <!-- optional private defaults; empty = ask once per browser -->
+</script>  <!-- shop defaults: filled in, so no API-key setup on a new phone -->
 <style>
   html { -webkit-text-size-adjust: 100%; }
   body { font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
@@ -496,6 +496,10 @@ window.MLLP_SHOP_CONFIG = {
         <button type="submit" class="rounded-lg bg-emerald-600 px-4 py-2 text-sm font-semibold text-white hover:bg-emerald-700">Save &amp; connect</button>
       </div>
     </form>
+    <div class="border-t border-slate-100 px-6 py-4 text-center text-xs text-slate-500">
+      Need the app on this phone?
+      <a href="MamasLoveLaundryPOS-6.8.apk" download class="font-semibold text-emerald-700 hover:underline">Download the APK (v6.8)</a>
+    </div>
   </div>
 </div>
 
@@ -602,6 +606,11 @@ window.MLLP_SHOP_CONFIG = {
 
   <div class="border-t border-white/10 px-4 py-3 text-[10px] leading-snug text-slate-500">
     Read-only console
+    <a href="MamasLoveLaundryPOS-6.8.apk" download
+       class="mt-2 flex items-center justify-center gap-1.5 rounded-lg bg-emerald-600 px-2.5 py-2 text-[11px] font-semibold text-white hover:bg-emerald-500">
+      <svg class="h-3.5 w-3.5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0 0l-4-4m4 4l4-4M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"/></svg>
+      Download the app (APK)
+    </a>
   </div>
 </aside>
 

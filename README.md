@@ -4,16 +4,31 @@ Static site: **no build step, no npm, no server, no framework**.
 
 ```
 owner-dashboard/
-└── index.html    ← owner console (sales / orders / customers / machines)
+├── index.html                      ← owner console (sales / orders / customers / machines)
+└── MamasLoveLaundryPOS-6.8.apk     ← the app, served by the same site
 ```
 
-The page is one self-contained file: the stylesheet (Tailwind), the error strip, the
-demo data and `shop-config` defaults are inlined, so there is no other file to copy and
-no CDN. Double-click it to use it locally.
+The page itself is one self-contained file: the stylesheet (Tailwind), the error strip,
+the demo data and `shop-config` defaults are inlined, so there is no other file to copy
+and no CDN. Double-click it to use it locally. The APK beside it is only there so the
+site can hand out the app.
 
 **This site is read-only — it has no key generator.** Activation keys are issued from
 the separate private repository `mamaslove-keygen-private`, so this repository stays
 public-safe.
+
+---
+
+## App download (APK)
+
+The current APK sits **beside `index.html`**, so uploading this folder publishes it too:
+
+    https://<project>.pages.dev/MamasLoveLaundryPOS-6.8.apk
+
+`index.html` links it from the setup screen and the sidebar (**Download the app (APK)**).
+For a new version, copy `publish/apk/MamasLoveLaundryPOS-<version>.apk` into this folder,
+update the two `href="MamasLoveLaundryPOS-..."` links in `index.html`, and delete the old
+APK so only the current build is offered. Keep the version in the file name.
 
 ---
 
@@ -65,21 +80,12 @@ auth settings matter for the private license page (`licenses.html` in
 
 ## 4. Opening the console
 
-**index.html** — enter the API key + Project ID of the shop's Firebase project (the same
-values used in the app under *Owner Settings → Cloud Sync*), choose a dashboard password,
-and it connects. Settings and the password hash stay in that browser only, so each new
-device asks once. To skip that step for your own shop, fill in the `MLLP_SHOP_CONFIG`
-block near the top of `index.html` before uploading:
+**index.html** is already set up for this shop: the `MLLP_SHOP_CONFIG` block near the top
+holds the `my-pos-laundry` API key and Project ID. Every new phone skips the connection
+screen; each browser still creates its own dashboard password once.
 
-```js
-window.MLLP_SHOP_CONFIG = {
-  apiKey: 'AIza...',        // shop project web API key
-  projectId: 'my-pos-laundry'
-};
-```
-
-That key is public — it only selects the project. **Never put the license project's key
-there.**
+The key is public — it only selects the project. **Never replace it with the licence
+project's (`pos-offline-laundry`) key.**
 
 **Demo** — open `index.html?demo=1` (or `https://<project>.pages.dev/?demo=1`) to see the
 whole console filled with sample orders, customers, machines and staff. It never asks for
