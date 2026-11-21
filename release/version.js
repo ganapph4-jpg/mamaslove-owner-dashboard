@@ -1,6 +1,6 @@
 window.MLLP_UPDATE = {
-  "version": "6.4",
-  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.4/MamasLoveLaundryPOS-6.4.apk",
-  "size": 649079,
-  "notes": "Much faster opening: reports, Excel, printing, owner settings, backup and the tutorial (about 190 KB of code) now load after the till is up instead of during start, so the POS opens with less than half the JavaScript to parse."
+  "version": "6.6",
+  "apkUrl": "https://github.com/ganapph4-jpg/mamaslove-owner-dashboard/releases/download/v6.6/MamasLoveLaundryPOS-6.6.apk",
+  "size": 657271,
+  "notes": "Licence lock fixed: it now engages only when the licence cover is really on screen, so a hidden cover can no longer freeze a working till. While locked the app's timers stop and Cloud Sync neither uploads nor pulls. Also includes 6.5: payment amounts stored as text can no longer corrupt a total, Save Shop Info works on a fresh install, Restore survives odd backup files, and the licence is copied to the memory card and restored."
 };
