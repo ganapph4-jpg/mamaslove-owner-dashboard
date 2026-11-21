@@ -1129,6 +1129,12 @@ window.MLLP_SHOP_CONFIG = {
      opened. "All history" in the header switches to the full list (0). */
   var WINDOW_DAYS_DEFAULT = 60;
   var windowDays = WINDOW_DAYS_DEFAULT;
+  /* The last good 60-day snapshot is kept on this phone so the next open
+     paints immediately while fresh data is fetched. All-history is never
+     cached (it can be far too large for localStorage). */
+  var DATA_CACHE_KEY = 'mllp_owner_data_v1';
+  var DATA_CACHE_MAX_CHARS = 2000000;
+  var loadSeq = 0;                      // newer refresh supersedes an older one
 
   /* ------------------------------------------------------------------ *
    * Error handling
@@ -1370,9 +1376,13 @@ window.MLLP_SHOP_CONFIG = {
     return null;
   }
   function saveCfg(c) {
+    var prevProject = cfg && cfg.projectId;
     cfg = c;
     if (DEMO) return;                 // the demo never overwrites real settings
-    try { localStorage.setItem(CFG_KEY, JSON.stringify(c)); } catch (e) {}
+    try {
+      if (prevProject !== c.projectId) localStorage.removeItem(DATA_CACHE_KEY);
+      localStorage.setItem(CFG_KEY, JSON.stringify(c));
+    } catch (e) {}
   }
 
   /* ------------------------------------------------------------------ *
@@ -1554,7 +1564,96 @@ window.MLLP_SHOP_CONFIG = {
       : new Date(Date.now() - windowDays * 86400000).toISOString();
   }
 
-  /* Default load: recent orders + the small collections. */
+  /* Firestore results are applied by refresh(), not by these loaders, so a
+     newer refresh can safely supersede an older one. */
+  function settledLoad(results) {
+    var out = { values: [], errors: [] };
+    results.forEach(function (r, i) {
+      if (r.status === 'fulfilled') out.values[i] = r.value;
+      else out.errors.push(r.reason);
+    });
+    return out;
+  }
+
+  function applyLoad(res, mergeTransactions) {
+    (res.values || []).forEach(function (v, i) {
+      if (v === undefined || v === null) return;
+      var coll = COLLECTIONS[i];
+      if (coll === 'transactions' && mergeTransactions) {
+        Object.keys(v).forEach(function (id) { data.transactions[id] = v[id]; });
+      } else {
+        data[coll] = v;
+      }
+    });
+  }
+
+  function cacheRead() {
+    try {
+      var raw = localStorage.getItem(DATA_CACHE_KEY);
+      if (!raw) return null;
+      var o = JSON.parse(raw);
+      if (!o || o.v !== 1 || !o.data || o.projectId !== cfg.projectId ||
+          o.windowDays !== WINDOW_DAYS_DEFAULT || !o.savedAt) return null;
+      if (!o.data.transactions || !o.data.config) return null;
+      return o;
+    } catch (e) {
+      try { localStorage.removeItem(DATA_CACHE_KEY); } catch (_) {}
+      return null;
+    }
+  }
+
+  /* Paint the last good 60-day snapshot before touching the network. */
+  function cacheRestore() {
+    var c = cacheRead();
+    if (!c) return false;
+    data = {
+      transactions: c.data.transactions || {},
+      customers: c.data.customers || {},
+      config: c.data.config || {},
+      services: c.data.services || {},
+      machineStatus: c.data.machineStatus || {}
+    };
+    lastUpdated = c.savedAt;
+    return true;
+  }
+
+  function cacheSave() {
+    if (DEMO || !cfg || windowDays !== WINDOW_DAYS_DEFAULT) return;
+    try {
+      var raw = JSON.stringify({
+        v: 1,
+        projectId: cfg.projectId,
+        windowDays: WINDOW_DAYS_DEFAULT,
+        savedAt: lastUpdated || Date.now(),
+        data: data
+      });
+      if (raw.length > DATA_CACHE_MAX_CHARS) {
+        try { localStorage.removeItem(DATA_CACHE_KEY); } catch (_) {}
+        return;
+      }
+      localStorage.setItem(DATA_CACHE_KEY, raw);
+    } catch (e) {
+      try { localStorage.removeItem(DATA_CACHE_KEY); } catch (_) {}
+    }
+  }
+
+  /* First paint: today's orders + the small collections. This is tiny compared
+     with the 60-day window, so the dashboard appears much sooner. */
+  async function loadRecent() {
+    var today = todayKey();
+    var fromIso = manilaMidnightIso(shiftDayKey(today, -1));
+    var toIso = new Date(Date.parse(manilaMidnightIso(shiftDayKey(today, 1))) - 1).toISOString();
+    var results = await Promise.allSettled([
+      ordersSinceUntil(fromIso, toIso),
+      listCollection('customers'),
+      listCollection('config'),
+      listCollection('services'),
+      listCollection('machineStatus')
+    ]);
+    return settledLoad(results);
+  }
+
+  /* Background load: the normal 60-day window + the small collections. */
   async function loadWindow() {
     var results = await Promise.allSettled([
       ordersSincePaged(windowStartIso()),
@@ -1563,28 +1662,12 @@ window.MLLP_SHOP_CONFIG = {
       listCollection('services'),
       listCollection('machineStatus')
     ]);
-    var errors = [];
-    results.forEach(function (r, i) {
-      if (r.status === 'fulfilled') {
-        data[COLLECTIONS[i]] = r.value;
-      } else {
-        errors.push(r.reason);          // keep whatever we already have
-      }
-    });
-    return errors;
+    return settledLoad(results);
   }
 
   async function loadAll() {
     var results = await Promise.allSettled(COLLECTIONS.map(function (c) { return listCollection(c); }));
-    var errors = [];
-    results.forEach(function (r, i) {
-      if (r.status === 'fulfilled') {
-        data[COLLECTIONS[i]] = r.value;
-      } else {
-        errors.push(r.reason);          // keep the last good data on screen
-      }
-    });
-    return errors;
+    return settledLoad(results);
   }
 
   /* ------------------------------------------------------------------ *
@@ -2800,7 +2883,8 @@ window.MLLP_SHOP_CONFIG = {
     return String(s.name || "Mama's Love Laundry");
   }
 
-  function renderChrome(errors) {
+  function renderChrome(errors, opts) {
+    opts = opts || {};
     document.getElementById('shop-name').textContent = shopName();
     var line = document.getElementById('conn-line');
     var target = document.getElementById('footer-target');
@@ -2814,56 +2898,112 @@ window.MLLP_SHOP_CONFIG = {
     var proj = document.getElementById('live-proj');
     if (proj) proj.textContent = '· ' + cfg.projectId;
 
+    var when = lastUpdated ? new Date(lastUpdated).toLocaleTimeString() : '—';
+    var scope = windowDays ? 'last ' + windowDays + ' days' : 'all history';
+    if (errors && errors.length) showError(errors[0]);
+    else clearErrors();
+
+    if (opts.cached) {
+      line.textContent = 'Saved data from ' + when + ' · updating…';
+      line.className = 'truncate text-[11px] leading-tight text-sky-700';
+      if (dot) dot.className = 'h-2 w-2 shrink-0 rounded-full bg-sky-400';
+      if (live) { live.textContent = 'saved ' + when + ' · refreshing'; live.className = 'mt-1 truncate text-[10px] leading-tight text-sky-300'; }
+      return;
+    }
+    if (opts.partial) {
+      line.textContent = '🟢 Connected · ' + cfg.projectId + ' · recent orders · loading ' + scope + '…';
+      line.className = 'truncate text-[11px] leading-tight text-emerald-700';
+      if (dot) dot.className = 'h-2 w-2 shrink-0 rounded-full bg-emerald-400';
+      if (live) { live.textContent = 'recent orders · loading older data'; live.className = 'mt-1 truncate text-[10px] leading-tight text-slate-400'; }
+      return;
+    }
     if (errors && errors.length) {
       /* The strip carries the failure; the line only says the view is stale. */
-      showError(errors[0]);
       line.textContent = 'Connected · ' + cfg.projectId + ' · some data did not update';
       line.className = 'truncate text-[11px] leading-tight text-amber-600';
       if (dot) dot.className = 'h-2 w-2 shrink-0 rounded-full bg-amber-400';
       if (live) { live.textContent = 'sync warning'; live.className = 'mt-1 truncate text-[10px] leading-tight text-amber-300'; }
     } else {
-      var when = lastUpdated ? new Date(lastUpdated).toLocaleTimeString() : '—';
-      var scope = windowDays ? 'last ' + windowDays + ' days' : 'all history';
       line.textContent = DEMO ? 'Preview · sample data · no database connected'
                               : '🟢 Connected · ' + cfg.projectId + ' · ' + scope + ' · updated ' + when;
       line.className = 'truncate text-[11px] leading-tight ' + (DEMO ? 'text-amber-600' : 'text-emerald-700');
       if (dot) dot.className = 'h-2 w-2 shrink-0 rounded-full bg-emerald-400';
       if (live) { live.textContent = 'checked ' + when + ' · ' + scope; live.className = 'mt-1 truncate text-[10px] leading-tight text-slate-400'; }
-      clearErrors();
     }
   }
 
   async function refresh(manual) {
-    if (!cfg || loading) return;
+    if (!cfg) return;
+    var seq = ++loadSeq;              // a manual change supersedes an older load
     loading = true;
     var btn = document.getElementById('btn-refresh');
     var icon = document.getElementById('refresh-icon');
     btn.disabled = true;
     icon.classList.add('animate-spin');
-    if (manual) document.getElementById('refresh-label').textContent = 'Loading';
+    document.getElementById('refresh-label').textContent = manual ? 'Loading' : 'Refresh';
 
     try {
-      var errors = DEMO ? demoFill()
-                        : (windowDays === 0 ? await loadAll() : await loadWindow());
-      lastUpdated = Date.now();
-      if (!errors || !errors.length) {
-        dailyCache = {};        // a manual refresh re-reads the chosen month
-        lastFullLoad = Date.now();
-        // Poll from the newest order we have — or from the window start when
-        // the shop is empty, so its very first sale is picked up.
-        lastOrderTime = newestTimeIn(data.transactions) || windowStartIso();
-        pollCount = 0;
+      var errors = [];
+      if (DEMO) {
+        errors = demoFill();
+        lastUpdated = Date.now();
+      } else {
+        /* Repeat visits: paint the last good snapshot before the network. */
+        if (!lastUpdated && windowDays === WINDOW_DAYS_DEFAULT && cacheRestore()) {
+          renderChrome([], { cached: true });
+          setView(activeView);
+          renderSetupValues();
+        }
+
+        if (windowDays === 0) {
+          var allRes = await loadAll();
+          if (seq !== loadSeq) return;
+          applyLoad(allRes, false);
+          errors = allRes.errors;
+          lastUpdated = Date.now();
+        } else {
+          /* 1) Today's orders: small and quick. */
+          var recent = await loadRecent();
+          if (seq !== loadSeq) return;
+          applyLoad(recent, true);
+          errors = recent.errors;
+          lastUpdated = Date.now();
+          renderChrome(errors, { partial: true });
+          setView(activeView);
+          renderSetupValues();
+
+          /* 2) The full 60-day window in the background. */
+          var full = await loadWindow();
+          if (seq !== loadSeq) return;
+          applyLoad(full, false);
+          errors = full.errors;
+          lastUpdated = Date.now();
+        }
+      }
+
+      if (seq !== loadSeq) return;
+      if (!errors || !errors.length) dailyCache = {};  // re-read the chosen month
+      lastFullLoad = Date.now();
+      // Poll from the newest order we have — or from the window start when
+      // the shop is empty, so its very first sale is picked up.
+      lastOrderTime = newestTimeIn(data.transactions) || windowStartIso();
+      pollCount = 0;
+      if ((!errors || !errors.length) && windowDays === WINDOW_DAYS_DEFAULT) {
+        var cacheFor = seq;
+        setTimeout(function () { if (cacheFor === loadSeq) cacheSave(); }, 0);
       }
       renderChrome(errors);
       setView(activeView);
       renderSetupValues();
     } catch (e) {
-      showError(e);
+      if (seq === loadSeq) showError(e);
     } finally {
-      loading = false;
-      btn.disabled = false;
-      icon.classList.remove('animate-spin');
-      document.getElementById('refresh-label').textContent = 'Refresh';
+      if (seq === loadSeq) {
+        loading = false;
+        btn.disabled = false;
+        icon.classList.remove('animate-spin');
+        document.getElementById('refresh-label').textContent = 'Refresh';
+      }
     }
   }
 
@@ -3098,7 +3238,10 @@ window.MLLP_SHOP_CONFIG = {
 
   document.getElementById('btn-forget').addEventListener('click', function () {
     if (DEMO) { report.warning('Demo mode — the saved key and project on this browser are not touched.'); return; }
-    try { localStorage.removeItem(CFG_KEY); } catch (e) {}
+    try {
+      localStorage.removeItem(CFG_KEY);
+      localStorage.removeItem(DATA_CACHE_KEY);
+    } catch (e) {}
     cfg = null;
     showGate(true);
   });

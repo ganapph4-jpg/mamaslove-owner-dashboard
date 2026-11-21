@@ -91,6 +91,13 @@ back.
 The key is public — it only selects the project. **Never replace it with the licence
 project's (`pos-offline-laundry`) key.**
 
+**Opening speed:** the page paints the last good 60-day snapshot saved on this
+phone immediately, reads the last two days of orders next, then loads the rest of the 60-day
+window in the background. The snapshot is stored in this browser's
+`localStorage` (only when it fits) and is replaced after each successful refresh.
+Use **Clear saved settings** to remove it from a shared phone. **All history**
+still downloads every order when you ask for it.
+
 **Demo** — open `index.html?demo=1` (or `https://<project>.pages.dev/?demo=1`) to see the
 whole console filled with sample orders, customers, machines and staff. It never asks for
 a key or password, never contacts a database and never saves anything to the browser, so
